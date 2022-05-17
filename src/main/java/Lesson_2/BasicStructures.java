@@ -43,7 +43,7 @@ public class BasicStructures {
     // метод должен отпечатать в консоль указанную строку, указанное количество раз;
 
     static void printString(String word, int num) {
-        for (int i=0; i<num + 1; i++){
+        for (int i=0; i<num; i++){
             System.out.print(word + " ");
         }
         System.out.println();
