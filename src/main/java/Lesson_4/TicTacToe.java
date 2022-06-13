@@ -11,7 +11,7 @@ public class TicTacToe {
 
     private static final String FIRST_SYMBOL_HEADER_TABLE = "*";
     private static final String SPACE = " ";
-    private static final char DOT_EMPTY = 'вЂў';
+    private static final char DOT_EMPTY = '•';
     private static final char DOT_HUMAN = 'X';
     private static final char DOT_COMPUTER = 'O';
 
@@ -24,10 +24,10 @@ public class TicTacToe {
 
 
     public static void main(String[] args) {
-        //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РёРіСЂС‹
-        initFieldMap();         //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
-        printHeaderMap();       //Р—Р°РїРѕР»РЅРµРЅРёРµ С€Р°РїРєРё РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
-        printFieldsMap();       //Р—Р°РїРѕР»РЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ РїРѕР»СЏ
+        //Инициализация игры
+        initFieldMap();         //Инициализация игрового поля
+        printHeaderMap();       //Заполнение шапки игрового поля
+        printFieldsMap();       //Заполнение значений поля
         gameProcess();
     }
 
@@ -53,7 +53,7 @@ public class TicTacToe {
     }
 
     private static void printFieldsMap() {
-        // Р—Р°РїРѕР»РЅСЏРµРј РїРѕР»Рµ РїСѓСЃС‚С‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё
+        // Заполняем поле пустыми значениями
         for (int i = 0; i < FIELD_SIZE; i++) {
             System.out.print(i + 1 + SPACE);
             for (int j = 0; j < FIELD_SIZE; j++) {
@@ -83,15 +83,15 @@ public class TicTacToe {
 
     private static boolean result(char symbol) {
         if (isWin(MAP, 'X')) {
-            System.out.println("Р’С‹ РІС‹РёРіСЂР°Р»Рё!");
+            System.out.println("Вы выиграли!");
             return true;
         }
         if (isWin(MAP, 'O')) {
-            System.out.println("Р’С‹ РџСЂРѕРёРіСЂР°Р»Рё!");
+            System.out.println("Вы Проиграли!");
             return true;
         }
         if (checkDraw()) {
-            System.out.println("РќРёС‡СЊСЏ!");
+            System.out.println("Ничья!");
             return true;
         }
         return false;
@@ -112,14 +112,14 @@ public class TicTacToe {
     private static void humanTorn() {
         int row;
         int column;
-        System.out.println("Р’РђРЁ РҐРћР”! ");
+        System.out.println("ВАШ ХОД! ");
 
         while (true) {
             do {
-                System.out.println("Р’Р’Р•Р”РРўР• РљРћРћР Р”РРќРђРўРЈ РЎРўР РћРљР: ");
+                System.out.println("ВВЕДИТЕ КООРДИНАТУ СТРОКИ: ");
                 row = dot_variant.nextInt() - 1;
 
-                System.out.println("Р’Р’Р•Р”РРўР• РљРћРћР Р”РРќРђРўРЈ РЎРўРћР›Р‘Р¦Рђ: ");
+                System.out.println("ВВЕДИТЕ КООРДИНАТУ СТОЛБЦА: ");
                 column = dot_variant.nextInt() - 1;
             } while (correctInput(row, column));
 
@@ -127,7 +127,7 @@ public class TicTacToe {
                 break;
             }
 
-            System.out.printf("РЇС‡РµР№РєР° СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё : %d:%d СѓР¶Рµ Р·Р°РЅСЏС‚Р°%n", row + 1, column + 1);
+            System.out.printf("Ячейка с координатами : %d:%d уже занята%n", row + 1, column + 1);
         }
         MAP[row][column] = DOT_HUMAN;
         turnsCount += 1;
@@ -136,7 +136,7 @@ public class TicTacToe {
     private static void computerTurn() {
         int row;
         int column;
-        System.out.println("РҐРћР” РљРћРњРџР¬Р®РўР•Р Рђ! ");
+        System.out.println("ХОД КОМПЬЮТЕРА! ");
 
         do {
             row = random.nextInt(FIELD_SIZE);
@@ -152,21 +152,21 @@ public class TicTacToe {
 
     static boolean isWin(char[][] field, char dot) {
 
-        // РџСЂРѕРІРµСЂРєР° РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
+        // Проверка по горизонтали
         for (int i = 0; i < field.length; i++) {
             if (field[i][0] == dot && field[i][1] == dot && field[i][2] == dot) {
                 return true;
             }
         }
 
-        // РџСЂРѕРІРµСЂРєР° РїРѕ РІРµСЂС‚РёРєР°Р»Рё
+        // Проверка по вертикали
         for (int i = 0; i < field.length; i++) {
             if (field[0][i] == dot && field[1][i] == dot && field[2][i] == dot) {
                 return true;
             }
         }
 
-        // РџСЂРѕРІРµСЂРєР° РІ РґРёР°РіРѕРЅР°Р»СЏС…
+        // Проверка в диагоналях
         if (field[0][0] == dot && field[1][1] == dot && field[2][2] == dot) {
             return true;
         }
